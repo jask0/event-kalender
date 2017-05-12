@@ -1,6 +1,35 @@
 <?php
   require_once('config.php');
+  require_once('connect.php');
   require_once($lang);
+
+  if(isset($_POST['submit'])){
+    $query="INSERT INTO eventcalender (year, month, day, starttime, stoptime, title, description, url)
+            VALUES (%s, %s, %s, '%s', '%s', '%s', '%s', '%s');";
+
+    $filter = array("'", '"');
+    $order   = array("\r\n", "\n", "\r");
+
+    $year = $_POST['inputYear'];
+    $month = $_POST['inputMonth'];
+    $day = $_POST['inputDay'];
+    $starttime = htmlentities($_POST['inputStartTime']);
+    $stoptime = htmlentities($_POST['inputStopTime']);
+    $title = str_replace($order, "<br>", str_replace($filter, "\'", htmlentities($_POST['inputTitle'])));
+    $description = str_replace($order, "<br>", str_replace($filter, "\'", htmlentities($_POST['inputDescription'])));
+    $url = htmlentities($_POST['inputLink']);
+
+    if($starttime == $stoptime){
+      $stoptime = "";
+    }
+
+    $query = sprintf($query, $year, $month, $day, $starttime, $stoptime, $title, $description, $url);
+
+    if ($result = mysqli_query($con, $query)) {
+        #Add later some fancy msg
+    }
+
+  }
 ?>
  <!DOCTYPE html>
 <html lang="en">
@@ -78,54 +107,55 @@
          <div class="modal-header">
              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
              <h4 class="modal-title" id="info-title"><?=$lg['ADD_EVENT']?></h4>
+             <span id="someInfo"></span>
            </div>
            <div class="modal-body" id="info-body">
-             <form class="form-horizontal">
+             <form class="form-horizontal" action="index.php" method="post">
                <div class="form-group">
                  <label for="inputDay" class="col-sm-2 control-label">Day</label>
                  <div class="col-sm-2">
-                   <input type="number" min="1" max="31" class="form-control" id="inputDay" value="<?=date('d')?>">
+                   <input type="number" min="1" max="31" class="form-control" id="inputDay" name="inputDay" value="<?=date('d')?>">
                  </div>
                  <label for="inputMonth" class="col-sm-2 control-label">Month</label>
                  <div class="col-sm-2">
-                   <input type="number" min="1" max="12" class="form-control" id="inputMonth" value="<?=date('n')?>">
+                   <input type="number" min="1" max="12" class="form-control" id="inputMonth" name="inputMonth" value="<?=date('n')?>">
                  </div>
                  <label for="inputYear" class="col-sm-2 control-label" >Year</label>
                  <div class="col-sm-2">
-                   <input type="number" length="4" class="form-control" id="inputYear" value="<?=date('Y')?>" required>
+                   <input type="number" length="4" class="form-control" id="inputYear" name="inputYear" value="<?=date('Y')?>" required>
                  </div>
                </div>
                <div class="form-group">
                  <label for="inputStartTime" class="col-sm-2 control-label" >Start Time</label>
                  <div class="col-sm-4">
-                   <input type="text" length="5" class="form-control" id="inputStartTime" value="<?=date('H:m')?>">
+                   <input type="text" length="5" class="form-control" id="inputStartTime" name="inputStartTime" value="<?=date('H:i')?>">
                  </div>
                  <label for="inputStopTime" class="col-sm-2 control-label" >Stop Time</label>
                  <div class="col-sm-4">
-                   <input type="text" length="5" class="form-control" id="inputStopTime" value="<?=date('H:m')?>">
+                   <input type="text" length="5" class="form-control" id="inputStopTime" name="inputStopTime" value="<?=date('H:i')?>">
                  </div>
                </div>
                <div class="form-group">
                  <label for="inputTitle" class="col-sm-2 control-label" >Event title</label>
                  <div class="col-sm-10">
-                   <input type="text" length="255" class="form-control" id="inputTitle" placeholder="Event title" required>
+                   <input type="text" length="255" class="form-control" id="inputTitle" name="inputTitle" placeholder="Event title" required>
                  </div>
                </div>
                <div class="form-group">
                  <label for="inputLink" class="col-sm-2 control-label" >Link to more info</label>
                  <div class="col-sm-10">
-                   <input type="url" length="255" class="form-control" id="inputLink" placeholder="https://">
+                   <input type="url" length="255" class="form-control" id="inputLink" name="inputLink" placeholder="https://">
                  </div>
                </div>
                <div class="form-group">
                  <label for="inputDescription" class="col-sm-2 control-label" >Event description</label>
                  <div class="col-sm-10">
-                   <textarea type="text" class="form-control" id="inputDescription" placeholder="Event description"></textarea>
+                   <textarea type="text" class="form-control" id="inputDescription" name="inputDescription" placeholder="Event description"></textarea>
                  </div>
                </div>
                <div class="form-group">
                  <div class="col-sm-offset-2 col-sm-10" style="text-align:right;">
-                   <button type="submit" class="btn btn-success">Save</button>
+                   <button class="btn btn-success" type="submit" name="submit">Save</button>
                  </div>
                </div>
              </form>

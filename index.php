@@ -2,21 +2,40 @@
   require_once('calender/config.php');
   require_once('calender/'.$lang);
 
-  if (isset($_REQUEST['y'])){
-    $y = $_REQUEST['y'];
-  } else {
-    $y = date('Y');
-  }
+
+  $yearUp = false;
+  $yearDown = false;
   if (isset($_REQUEST['m'])){
     # change the month because of the javascript month array [0..11]
-    $m = $_REQUEST['m']-1;
+    $m = intval($_REQUEST['m'])-1;
+    if($m<0){
+      $m=11;
+      $yearDown = true;
+    }
+    if($m>11){
+      $m=0;
+      $yearUp = true;
+    }
   } else {
     $m = date('n')-1;
   }
+  if (isset($_REQUEST['y'])){
+    $y = $_REQUEST['y'];
+    if($yearUp){
+      $y = intval($y)+1;
+    }
+    if($yearDown){
+      $y = intval($y)-1;
+    }
+  } else {
+    $y = date('Y');
+  }
   if (isset($_REQUEST['d'])){
     $d = $_REQUEST['d'];
+
   } else {
     $d = 0;
+
   }
 
 ?>
@@ -107,6 +126,15 @@
           <td id="d33"></td>
           <td id="d34"></td>
           <td id="d35"></td>
+        </tr>,
+        <tr>
+          <td id="d36"></td>
+          <td id="d37"></td>
+          <td id="d38"></td>
+          <td id="d39"></td>
+          <td id="d40"></td>
+          <td id="d41"></td>
+          <td id="d42"></td>
         </tr>
       </tbody>
     </table>

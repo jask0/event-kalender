@@ -75,7 +75,7 @@ if (isset($id) && !isset($edit)) {
 
 if(isset($all)){
   $respond = '';
-  $query = "SELECT * FROM eventcalender ORDER BY year DESC, month DESC, day DESC, starttime";
+  $query = "SELECT * FROM eventcalender ORDER BY id DESC;";
 
   // lookup all hints from array if $q is different from ""
   if ($result = mysqli_query($con, $query)) {

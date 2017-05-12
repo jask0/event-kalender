@@ -3,12 +3,7 @@ var MONTHS = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "Aug
 
 function loadCalender(y, m, selectedDay=0){
   nowDate = new Date();
-  if (y == 0) {
-    y = nowDate.getFullYear();
-  }
-  if (m == 0) {
-    m = nowDate.getMonth();
-  }
+
   var firstDate = new Date(y, m, 1).getDay();
   if(firstDate == 0){
     firstDate=7;
@@ -103,6 +98,27 @@ function editEvent(id){
   };
   xmlhttp.open("GET", "./getevent.php?id="+id);
   xmlhttp.send();
+}
+
+function addEvent(){
+  var xmlhttp = new XMLHttpRequest();
+  var data = new Array();
+  data['year'] =        Number(document.getElementById('inputYear').getAttribute("value"));
+  data['month'] =       Number(document.getElementById('inputMonth').getAttribute("value"));
+  data['day'] =         Number(document.getElementById('inputDay').getAttribute("value"));
+  data['startTime'] =   document.getElementById('inputStartTime').getAttribute("value");
+  data['stopTime'] =    document.getElementById('inputStopTime').getAttribute("value");
+  data['title'] =       document.getElementById('inputTitle').getAttribute("value");
+  data['description'] = document.getElementById('inputDescription').innerHTML;
+  data['url'] =         document.getElementById('inputLink').getAttribute("value");
+
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200 && this.responseText !== "") {
+      document.getElementById('someInfo').innerHTML = this.responseText;
+    }
+  };
+  xmlhttp.open("POST", "./addevent.php", true);
+  xmlhttp.send(JSON.stringfay(data));
 }
 
 function deleteEvent(id){
