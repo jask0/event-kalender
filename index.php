@@ -57,7 +57,7 @@
   </style>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
-<body onLoad="loadCalender(<?=$y?>,<?=$m?>,<?=$d?>)">
+<body>
 <h2> Mein Kalender</h2>
 <div class="calender">
     <table class="table table-bordered">
@@ -155,7 +155,7 @@
    </div><!-- /.modal-content -->
  </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<script type="text/javascript" src="calender/js/calender.js"></script>
+<script onLoad="loadCalender(<?=$y?>,<?=$m?>,<?=$d?>)" type="text/javascript" src="calender/js/calender.js"></script>
 <script
 			  src="https://code.jquery.com/jquery-3.2.1.min.js"
 			  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="

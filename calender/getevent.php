@@ -104,6 +104,14 @@ if(isset($all)){
             $time .= " - ". $stoptime;
           }
         }
+        if(strlen($description) >= 53){
+    			$description = substr($description, 0, 49) . '...';
+    		}
+    		if(strlen($link) >= 43){
+    			$link_text = substr($link, 0, 39) . '...';
+    		} else {
+    			$link_text = $link;
+    		}
 
         $respond .= '<tr><td id="eventId_'.$id.'">'.$id.'</td>
                      <td>'.$title.'</td>

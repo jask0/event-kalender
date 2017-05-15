@@ -10,15 +10,15 @@
             WHERE id=$_GET[id]";
 
     $filter = array("'", '"');
-    $order   = array("\r\n", "\n", "\r");
+    $order   = array("\r\n", "\n", "\r", "&lt;br&gt;");
 
     $year = $_POST['inputYear'];
     $month = $_POST['inputMonth'];
     $day = $_POST['inputDay'];
     $starttime = htmlentities($_POST['inputStartTime']);
     $stoptime = htmlentities($_POST['inputStopTime']);
-    $title = str_replace($order, "<br>", str_replace($filter, "\'", htmlentities($_POST['inputTitle'])));
-    $description = str_replace($order, "<br>", str_replace($filter, "\'", htmlentities($_POST['inputDescription'])));
+    $title = str_replace($order, "<br>", str_replace($filter, "\'", $_POST['inputTitle']));
+    $description = str_replace($order, "<br>", str_replace($filter, "\'", $_POST['inputDescription']));
     $url = htmlentities($_POST['inputLink']);
 
     if($starttime == $stoptime){

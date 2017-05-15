@@ -1,4 +1,8 @@
 <?php
+session_start();
+if(!isset($_SESSION['username'])){
+	header('Location: login.php');
+}
   require_once('config.php');
   require_once('connect.php');
   require_once($lang);
@@ -15,8 +19,8 @@
     $day = $_POST['inputDay'];
     $starttime = htmlentities($_POST['inputStartTime']);
     $stoptime = htmlentities($_POST['inputStopTime']);
-    $title = str_replace($order, "<br>", str_replace($filter, "\'", htmlentities($_POST['inputTitle'])));
-    $description = str_replace($order, "<br>", str_replace($filter, "\'", htmlentities($_POST['inputDescription'])));
+    $title = str_replace($order, "<br>", str_replace($filter, "\'", $_POST['inputTitle']));
+    $description = str_replace($order, "<br>", str_replace($filter, "\'", $_POST['inputDescription']));
     $url = htmlentities($_POST['inputLink']);
 
     if($starttime == $stoptime){
@@ -71,7 +75,7 @@
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li><a href="#" data-toggle="modal" data-target="#addEvent"><?=$lg['ADD_EVENT']?></a></li>
-            <li><a href="#about"></a></li>
+            <li><a href="login.php?logout=1"><?=$lg['LOGOUT']?></a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -80,15 +84,15 @@
     <div class="container">
 
       <div class="starter-template">
-        <h1>Termine im Überblick</h1>
+        <h1><?=$lg['ALL_EVENTS']?></h1>
         <table class="table table-bordered">
            <thead>
              <tr>
                <th>#</th>
-               <th>Event Title</th>
-               <th>Description</th>
-               <th>Event Time</th>
-               <th>URL</th>
+               <th><?=$lg['EVENT_TITLE']?></th>
+               <th><?=$lg['EVENT_DESCRIPTION']?></th>
+               <th><?=$lg['EVENT_TIME']?></th>
+               <th><?=$lg['EVENT_URL']?></th>
                <th></th>
              </tr>
            </thead>
@@ -112,50 +116,50 @@
            <div class="modal-body" id="info-body">
              <form class="form-horizontal" action="index.php" method="post">
                <div class="form-group">
-                 <label for="inputDay" class="col-sm-2 control-label">Day</label>
+                 <label for="inputDay" class="col-sm-2 control-label"><?=$lg['EVENT_DAY']?></label>
                  <div class="col-sm-2">
                    <input type="number" min="1" max="31" class="form-control" id="inputDay" name="inputDay" value="<?=date('d')?>">
                  </div>
-                 <label for="inputMonth" class="col-sm-2 control-label">Month</label>
+                 <label for="inputMonth" class="col-sm-2 control-label"><?=$lg['EVENT_MONTH']?></label>
                  <div class="col-sm-2">
                    <input type="number" min="1" max="12" class="form-control" id="inputMonth" name="inputMonth" value="<?=date('n')?>">
                  </div>
-                 <label for="inputYear" class="col-sm-2 control-label" >Year</label>
+                 <label for="inputYear" class="col-sm-2 control-label" ><?=$lg['EVENT_YEAR']?></label>
                  <div class="col-sm-2">
                    <input type="number" length="4" class="form-control" id="inputYear" name="inputYear" value="<?=date('Y')?>" required>
                  </div>
                </div>
                <div class="form-group">
-                 <label for="inputStartTime" class="col-sm-2 control-label" >Start Time</label>
+                 <label for="inputStartTime" class="col-sm-2 control-label" ><?=$lg['EVENT_START_TIME']?></label>
                  <div class="col-sm-4">
                    <input type="text" length="5" class="form-control" id="inputStartTime" name="inputStartTime" value="<?=date('H:i')?>">
                  </div>
-                 <label for="inputStopTime" class="col-sm-2 control-label" >Stop Time</label>
+                 <label for="inputStopTime" class="col-sm-2 control-label" ><?=$lg['EVENT_STOP_TIME']?></label>
                  <div class="col-sm-4">
                    <input type="text" length="5" class="form-control" id="inputStopTime" name="inputStopTime" value="<?=date('H:i')?>">
                  </div>
                </div>
                <div class="form-group">
-                 <label for="inputTitle" class="col-sm-2 control-label" >Event title</label>
+                 <label for="inputTitle" class="col-sm-2 control-label" ><?=$lg['EVENT_TITLE']?></label>
                  <div class="col-sm-10">
                    <input type="text" length="255" class="form-control" id="inputTitle" name="inputTitle" placeholder="Event title" required>
                  </div>
                </div>
                <div class="form-group">
-                 <label for="inputLink" class="col-sm-2 control-label" >Link to more info</label>
+                 <label for="inputLink" class="col-sm-2 control-label" ><?=$lg['EVENT_INFO_LINK']?></label>
                  <div class="col-sm-10">
                    <input type="url" length="255" class="form-control" id="inputLink" name="inputLink" placeholder="https://">
                  </div>
                </div>
                <div class="form-group">
-                 <label for="inputDescription" class="col-sm-2 control-label" >Event description</label>
+                 <label for="inputDescription" class="col-sm-2 control-label" ><?=$lg['EVENT_DESCRIPTION']?></label>
                  <div class="col-sm-10">
                    <textarea type="text" class="form-control" id="inputDescription" name="inputDescription" placeholder="Event description"></textarea>
                  </div>
                </div>
                <div class="form-group">
                  <div class="col-sm-offset-2 col-sm-10" style="text-align:right;">
-                   <button class="btn btn-success" type="submit" name="submit">Save</button>
+                   <button class="btn btn-success" type="submit" name="submit"><?=$lg['SAVE_EVENT']?></button>
                  </div>
                </div>
              </form>
