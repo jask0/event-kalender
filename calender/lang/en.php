@@ -31,11 +31,11 @@ $lg = array(
 "LOGIN_SUCCESSFUL" => "Login successful",
 "TO_CALENDER" => "To the calender",
 "LOGIN_FORM" => "Login here",
-"EVENT_DAY" = "Day",
-"EVENT_MONTH" = "Month",
-"EVENT_YEAR" = "Year",
-"EVENT_START_TIME" = "Start time",
-"EVENT_STOP_TIME" = "Stop time",
-"EVENT_INFO_LINK" = "More info link"
+"EVENT_DAY" => "Day",
+"EVENT_MONTH" => "Month",
+"EVENT_YEAR" => "Year",
+"EVENT_START_TIME" => "Start time",
+"EVENT_STOP_TIME" => "Stop time",
+"EVENT_INFO_LINK" => "More info link"
 
 );
